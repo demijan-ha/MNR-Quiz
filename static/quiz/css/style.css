@@ -1,0 +1,24 @@
+.navbar-top-dark {
+    background-color: #202b8c;
+}
+
+.fill {object-fit: fill;}
+.contain {object-fit: contain;}
+.cover {object-fit: cover;}
+.scale-down {object-fit: scale-down;}
+.none {object-fit: none;}
+
+.bg-image {
+    background-image: url("../images/ohrid.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.button-padding {
+    padding-top: 35%;
+}
+
+.front-img {
+    width: 100%;
+
+}
