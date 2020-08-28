@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load quiz_tags %}
+
+{% block title %} Results {% endblock %}
+{% block description %} {% trans "Results for" %} {{ quiz.title }} {% endblock %}
+
+{% block content %}
+    <div class="container p-20">
+        {% if previous.answers %}
+
+        <p class="muted"><small>{% trans "The previous question" %}:</small></p>
+        <p>{{ previous.previous_question }}</p>
+        <p>Your answer was
+        <strong>
+        {{ previous.previous_outcome|yesno:"correct,incorrect" }}
+        </strong>
+        </p>
+        {% include 'correct_answer.html' %}
+        <p><strong>{% trans "Explanation" %}:</strong></p>
+        <div class="well " style="background-color: #fcf8e3;">
+        <p>{{ previous.previous_question.explanation }}</p>
+        </div>
+        <hr>
+
+        {% endif %}
+
+        {% if max_score %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="font-weight-bold">{% trans "Congratulations!" %}</h1>
+                    <h4>{% trans "Here are your final results:"%}</h4>
+                </div>
+
+                <div class="col-md-12">
+                    <p class="lead font-weight-bold font-size-22">
+                        {% trans "You answered" %} {{ score }} {% trans "questions correctly out of" %} {{ max_score }}, {% trans "giving you" %} {{ percent }} {% trans "percent correct!" %}
+                    </p>
+                </div>
+
+                <div class="col-md-12 font-size-18">
+                    {% if user.is_authenticated %}
+                        <p>{% trans "Check your answers below and review the explanations to learn more!"%}</p>
+                    {% else %}
+                        <p>{% trans "Check your answers below and review the explanations to learn more! If you wish, you could save your results and get the chance to win a small prize."%}</p>
+                        <a href="{{ url }}/signup/{{ uuid }}" class="btn btn-primary btn-lg" type="button">Sign me up and save my results!</a>
+                    {% endif %}
+
+
+                </div>
+            </div>
+
+        {% endif %}
+
+        {% if questions %}
+            {% for question in questions %}
+                <div class="col-md-12">
+                    <p class="lead font-weight-bold font-size-18">
+                        {{ question.content }}
+                    </p>
+
+                    {% correct_answer_for_all question %}
+
+                    <div class="card">
+                        {% if question.user_answer %}
+                            <h2 class="card-title">{% trans "Your answer was" %}: {{ question|answer_choice_to_string:question.user_answer }}</h2>
+                            <h5 class="card-title">{% trans "Explanation" %}</h5>
+                        {% else %}
+                            <h2 class="card-title">{% trans "Explanation" %}</h2>
+                        {% endif %}
+                        <p>{{ question.explanation|safe }}</p>
+                    </div>
+
+                    <hr>
+
+                </div>
+
+            {% endfor %}
+        {% endif %}
+
+    </div>
+{% endblock %}

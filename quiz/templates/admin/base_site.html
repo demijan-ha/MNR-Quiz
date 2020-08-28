@@ -1,0 +1,23 @@
+{% extends 'admin/base_site.html' %}
+
+{% load static %}
+
+{% block extrastyle %}
+<!--    <link href="{% static 'quiz/css/hm.css' %}" rel="stylesheet" />-->
+<!--    <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">-->
+<!--    <script src="https://kit.fontawesome.com/4d69bddfe9.js" crossorigin="anonymous"></script>-->
+{% endblock %}
+
+{% block extrahead %}
+    <link rel="icon" href="{% static '/favicon.ico' %}">
+{% endblock %}
+
+{% block branding %}
+    <div class="head">
+        <img class="brand_img" src="{% static 'quiz/images/mfa_logo.svg'%}" width="180" alt="logo">
+    </div>
+{% endblock %}
+
+{% block nav-global %}
+
+{% endblock %}

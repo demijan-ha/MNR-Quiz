@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static%}
+{% load i18n%}
+
+{% block title %} {{ quiz.title }} {% endblock %}
+{% block description %} {{ quiz.title }} - {{ quiz.description }} {% endblock %}
+
+{% block content %}
+    <div class="container p-20" >
+
+		{% if previous.answers %}
+
+		  <p class="muted"><small>The previous question:</small></p>
+		  <p>{{ previous.previous_question }}</p>
+
+		  {% if previous.previous_outcome %}
+			< class="alert alert-success">
+		  {% else %}
+			<div class="alert alert-warning">
+		  {% endif %}
+			  <p><small>
+				{% trans "Your answer was" %} </small>
+				<strong>
+				  {{ previous.previous_outcome|yesno:"correct,incorrect" }}
+				</strong>
+			  </p>
+
+			</div>
+
+			{% include 'correct_answer.html' %}
+
+			<p><strong>{% trans "Explanation" %}:</strong></p>
+			<div class="well " style="background-color: #fcf8e3;">
+			  <p>{{ previous.previous_question.explanation }}</p>
+			</div>
+
+			<hr>
+
+		{% endif %}
+
+		{% if question %}
+
+			<div class="row">
+				<div class="col-6">
+					<p class="lead">{% trans "Question category" %}: <strong>{{ question.category }}</strong></p>
+				</div>
+
+				<div class="col-6">
+					{% if progress %}
+						<p class="lead d-flex justify-content-end">
+							{% trans "Question" %} {{ progress.0|add:1 }} {% trans "of" %} {{ progress.1 }}
+						</p>
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<p class="font-size-24">{{ question.content }}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col pb-10">
+					{% if question.figure %}
+						<img src="{{ question.figure.url }}" alt="{{ question.content }}" class="img-fluid" />
+					{% endif %}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<form action="" method="POST">{% csrf_token %}
+						<input type=hidden name="question_id" value="{{ question.id }}">
+
+						<div class="form-group">
+							{% for answer in form.answers %}
+								<div class="custom-radio">
+									{{ answer.tag }}
+									<label for="{{ answer.id_for_label }}">{{ answer.choice_label }}</label>
+								</div>
+							{% endfor %}
+						</div>
+
+						<div class="col py-20 justify-content-center">
+							{% if progress.0|add:1 == progress.1 %}
+								<input type="submit" value="Submit" class="btn btn-large btn-block btn-primary" >
+							{% else %}
+								<input type="submit" value="Next" class="btn btn-large btn-block btn-primary" >
+							{% endif %}
+						</div>
+					</form>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

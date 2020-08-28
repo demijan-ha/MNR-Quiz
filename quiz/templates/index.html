@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Let's celebrate together!{% endblock %}
+{% block description %}{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid" >
+        <div class="jumbotron jumbotron-fluid bg-image" style="height: calc(100vh - 132px);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                        <img src="{% static 'quiz/images/logo.png' %}" class="front-img">
+                    </div>
+                </div>
+                <div class="row p-20">
+                    <div class="col">
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'quiz_start_page' slug='ind-quiz' %}" class="btn btn-lg btn-primary align-self-center">Start the quiz!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock  %}
