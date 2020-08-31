@@ -3,14 +3,26 @@
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container p-20">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <h1 class="text-center">Login</h1>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    {{ form }}
-                    <input type="submit" value="Submit">
+            <div class="col-md-12">
+                <p class="font-size-24">Register to save your results</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <form action="" method="post">{% csrf_token %}
+
+                    {% for field in form %}
+                        <div class="fieldWrapper">
+                            <div class="form-group">
+                                {{ field.label_tag }}
+                                <input type="text" class="form-control" id="{{ field.id_for_label }}" required="required">
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <input class="btn btn-primary" type="submit" value="Submit">
                 </form>
             </div>
         </div>
